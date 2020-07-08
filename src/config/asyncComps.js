@@ -1,7 +1,7 @@
 /*
   将所有组件引入模块
 */
-import { lazy } from "react";
+import {lazy} from "react";
 
 const Admin = () => lazy(() => import("@pages/Admin"));
 const User = () => lazy(() => import("@pages/Acl/User"));
@@ -21,6 +21,7 @@ const Course = () => lazy(() => import("@pages/Edu/Course"));
 const Teacher = () => lazy(() => import("@pages/Edu/Teacher"));
 const Settings = () => lazy(() => import("@pages/User/Settings"));
 const Center = () => lazy(() => import("@pages/User/Center"));
+const Subject = () => lazy(() => import("@pages/Edu/Subject"));
 
 export default {
   Admin,
@@ -37,4 +38,5 @@ export default {
   Teacher,
   Settings,
   Center,
+  Subject
 };
