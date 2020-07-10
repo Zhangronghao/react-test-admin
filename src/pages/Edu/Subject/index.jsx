@@ -9,14 +9,12 @@ import './index.css'
 
 const columns = [
   {title: '学科', dataIndex: 'name', key: 'name'},
-
   {
     title: '操作',
     dataIndex: '',
     key: 'x',
     render: () => <>
       <Button type="primary" className="firstBtn"><FormOutlined /></Button>
-
       <Button type="danger"><DeleteOutlined /></Button>
     </>,
     width: 200
@@ -55,7 +53,6 @@ const data = [
 ];
 
 export default class Subject extends Component {
-
   render() {
     return <div className="bgc">
       <Button type="primary" icon={<PlusOutlined />}>添加</Button>
