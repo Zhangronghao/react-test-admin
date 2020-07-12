@@ -18,3 +18,27 @@ export function reqGetSubjectList(page, limit) {
     method: 'GET'
   })
 }
+//获取二级分类接口
+export function reqGetSecSubjectList(parentId) {
+  // request返回一个promise
+  return request({
+    url: `${BASE_URL}/get/${parentId}`,
+    // http://localhost:8888/admin/edu/subject/1/10
+    method: 'GET'
+  })
+}
+//添加课程分类借楼
+// http://localhost:5000/admin/edu/subject/save
+export function reqAddSubjectList(title, parentId) {
+  // request返回一个promise
+  return request({
+    url: `${BASE_URL}/save`,
+    // http://localhost:8888/admin/edu/subject/1/10
+    method: 'POST',
+    //axios的post请求发送数据用data
+    data: {
+      title,
+      parentId
+    }
+  })
+}
