@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, message, Tooltip, Modal, Alert, Table } from "antd";
+import React, {Component} from "react";
+import {Button, message, Tooltip, Modal, Alert, Table} from "antd";
 import {
   FullscreenOutlined,
   RedoOutlined,
@@ -13,8 +13,10 @@ import dayjs from "dayjs";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import SearchForm from "./SearchForm";
+
+import {getLessonList} from './redux'
 
 import "./index.less";
 
@@ -27,9 +29,11 @@ dayjs.extend(relativeTime);
     //   state.course.permissionValueList,
     //   "Course"
     // )
-  })
-  // { getcourseList }
-)
+    //包装组件先把数据传进来
+    chapterList: state.chapterList,
+  }), {getLessonList})
+// { getcourseList }
+
 class Chapter extends Component {
   state = {
     searchLoading: false,
@@ -63,7 +67,7 @@ class Chapter extends Component {
       tableLoading: true,
     });
 
-    this.getcourseList({ page, limit }).finally(() => {
+    this.getcourseList({page, limit}).finally(() => {
       this.setState({
         tableLoading: false,
         page,
@@ -72,9 +76,9 @@ class Chapter extends Component {
     });
   };
 
-  getcourseList = ({ page, limit, Coursename, nickName }) => {
+  getcourseList = ({page, limit, Coursename, nickName}) => {
     return this.props
-      .getcourseList({ page, limit, Coursename, nickName })
+      .getcourseList({page, limit, Coursename, nickName})
       .then((total) => {
         if (total === 0) {
           message.warning("暂无用户列表数据");
@@ -89,9 +93,14 @@ class Chapter extends Component {
       selectedRowKeys,
     });
   };
-
+  handleClickExpand = (expand, record) => {
+    console.log(expand,record);
+    if (expand) {
+      this.props.getLessonList(record._id)
+    }
+  }
   render() {
-    const { previewVisible, previewImage, selectedRowKeys } = this.state;
+    const {previewVisible, previewImage, selectedRowKeys} = this.state;
 
     const columns = [
       {
@@ -119,7 +128,7 @@ class Chapter extends Component {
                   </Button>
                 </Tooltip>
                 <Tooltip title="更新章节">
-                  <Button type="primary" style={{ margin: "0 10px" }}>
+                  <Button type="primary" style={{margin: "0 10px"}}>
                     <FormOutlined />
                   </Button>
                 </Tooltip>
@@ -135,80 +144,80 @@ class Chapter extends Component {
       },
     ];
 
-    const data = [
-      {
-        id: "111",
-        title: "第一章节",
-        children: [
-          {
-            id: "1",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "2",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "3",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-      {
-        id: "222",
-        title: "第二章节",
-        children: [
-          {
-            id: "4",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "5",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "6",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-      {
-        id: "333",
-        title: "第三章节",
-        children: [
-          {
-            id: "1192252824606289921",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "1192628092797730818",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "1192632495013380097",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-    ];
+    // const data = [
+    //   {
+    //     id: "111",
+    //     title: "第一章节",
+    //     children: [
+    //       {
+    //         id: "1",
+    //         title: "第一课时",
+    //         free: false,
+    //         videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
+    //       },
+    //       {
+    //         id: "2",
+    //         title: "第二课时",
+    //         free: true,
+    //         videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
+    //       },
+    //       {
+    //         id: "3",
+    //         title: "第三课时",
+    //         free: true,
+    //         videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     id: "222",
+    //     title: "第二章节",
+    //     children: [
+    //       {
+    //         id: "4",
+    //         title: "第一课时",
+    //         free: false,
+    //         videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
+    //       },
+    //       {
+    //         id: "5",
+    //         title: "第二课时",
+    //         free: true,
+    //         videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
+    //       },
+    //       {
+    //         id: "6",
+    //         title: "第三课时",
+    //         free: true,
+    //         videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     id: "333",
+    //     title: "第三章节",
+    //     children: [
+    //       {
+    //         id: "1192252824606289921",
+    //         title: "第一课时",
+    //         free: false,
+    //         videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
+    //       },
+    //       {
+    //         id: "1192628092797730818",
+    //         title: "第二课时",
+    //         free: true,
+    //         videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
+    //       },
+    //       {
+    //         id: "1192632495013380097",
+    //         title: "第三课时",
+    //         free: true,
+    //         videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
+    //       },
+    //     ],
+    //   },
+    // ];
 
     const rowSelection = {
       selectedRowKeys,
@@ -257,11 +266,11 @@ class Chapter extends Component {
           <div className="course-table-header">
             <h3>课程章节列表</h3>
             <div>
-              <Button type="primary" style={{ marginRight: 10 }}>
+              <Button type="primary" style={{marginRight: 10}}>
                 <PlusOutlined />
                 <span>新增</span>
               </Button>
-              <Button type="danger" style={{ marginRight: 10 }}>
+              <Button type="danger" style={{marginRight: 10}}>
                 <span>批量删除</span>
               </Button>
               <Tooltip title="全屏" className="course-table-btn">
@@ -279,19 +288,22 @@ class Chapter extends Component {
             message={
               <span>
                 <InfoCircleOutlined
-                  style={{ marginRight: 10, color: "#1890ff" }}
+                  style={{marginRight: 10, color: "#1890ff"}}
                 />
                 {`已选择 ${selectedRowKeys.length} 项`}
               </span>
             }
             type="info"
-            style={{ marginBottom: 20 }}
+            style={{marginBottom: 20}}
           />
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
-            rowKey="id"
+            dataSource={this.props.chapterList.items}
+            rowKey="_id"
+            expandable={{
+              onExpand: this.handleClickExpand
+            }}
           />
         </div>
 
@@ -300,7 +312,7 @@ class Chapter extends Component {
           footer={null}
           onCancel={this.handleImgModal}
         >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <img alt="example" style={{width: "100%"}} src={previewImage} />
         </Modal>
       </div>
     );

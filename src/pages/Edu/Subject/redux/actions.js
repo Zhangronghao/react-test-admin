@@ -1,11 +1,13 @@
 import {
   reqGetSubjectList,
-  reqGetSecSubjectList
+  reqGetSecSubjectList,
+  reqUpdateSubject
 } from "@api/edu/subject";
 
 import {
   GET_SUBJECT_LIST,
-  GET_SECSUBJECT_LIST
+  GET_SECSUBJECT_LIST,
+  UPDATE_SUBJECT
 } from "./constants";
 /**
  * 获取/搜索 用户分页数据
@@ -16,9 +18,10 @@ const getSubjectListSync = (list) => ({
   data: list,
 });
 
-export const getSubjectList = ({page, limit}) => {
+export const getSubjectList = (page, limit) => {
+  console.log(page, limit);
   return (dispatch) => {
-    return reqGetSubjectList({page, limit}).then((response) => {
+    return reqGetSubjectList(page, limit).then((response) => {
       dispatch(getSubjectListSync(response));
       return response.total;
     });
@@ -38,3 +41,18 @@ export const getSecSubjectList = (parentId) => {
     });
   };
 };
+
+//更新学科数据
+const getUpdateSubjectSync = (data) => ({
+  type: UPDATE_SUBJECT,
+  data
+})
+
+export const getUpdateSubject = (title, id) => {
+  return (dispatch) => {
+    return reqUpdateSubject(title, id).then((res) => {
+      dispatch(getUpdateSubjectSync({title, id}))
+      return res
+    })
+  }
+}

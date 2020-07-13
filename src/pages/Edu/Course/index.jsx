@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Button, message, Table, Tooltip, Modal } from "antd";
+import React, {Component} from "react";
+import {Button, message, Table, Tooltip, Modal} from "antd";
 import {
   FormOutlined,
   DeleteOutlined,
@@ -11,7 +11,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import SearchForm from "./SearchForm";
 // import { getCourseList } from "./redux";
 
@@ -43,9 +43,9 @@ class Course extends Component {
       searchLoading: true,
     });
 
-    const { page, limit } = this.state;
+    const {page, limit} = this.state;
 
-    this.getcourseList({ Coursename: searchName, page, limit }).finally(() => {
+    this.getcourseList({Coursename: searchName, page, limit}).finally(() => {
       this.setState({
         searchLoading: false,
       });
@@ -116,7 +116,7 @@ class Course extends Component {
       render: (img) => (
         <img
           onClick={this.showImgModal(img)}
-          style={{ width: 50, height: 40, cursor: "pointer" }}
+          style={{width: 50, height: 40, cursor: "pointer"}}
           src={img}
           alt="课程图片"
         />
@@ -193,7 +193,7 @@ class Course extends Component {
       tableLoading: true,
     });
 
-    this.getcourseList({ page, limit }).finally(() => {
+    this.getcourseList({page, limit}).finally(() => {
       this.setState({
         tableLoading: false,
         page,
@@ -202,9 +202,9 @@ class Course extends Component {
     });
   };
 
-  getcourseList = ({ page, limit, Coursename, nickName }) => {
+  getcourseList = ({page, limit, Coursename, nickName}) => {
     return this.props
-      .getcourseList({ page, limit, Coursename, nickName })
+      .getcourseList({page, limit, Coursename, nickName})
       .then((total) => {
         if (total === 0) {
           message.warning("暂无用户列表数据");
@@ -640,7 +640,7 @@ class Course extends Component {
           <div className="course-table-header">
             <h3>课程数据列表</h3>
             <div>
-              <Button type="primary" style={{ marginRight: 10 }}>
+              <Button type="primary" style={{marginRight: 10}}>
                 <PlusOutlined />
                 <span>新建</span>
               </Button>
@@ -670,7 +670,7 @@ class Course extends Component {
               onShowSizeChange: this.handleTableChange,
             }}
             loading={tableLoading}
-            scroll={{ x: 1200 }}
+            scroll={{x: 1200}}
           />
         </div>
 
@@ -679,7 +679,7 @@ class Course extends Component {
           footer={null}
           onCancel={this.handleImgModal}
         >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <img alt="example" style={{width: "100%"}} src={previewImage} />
         </Modal>
       </div>
     );

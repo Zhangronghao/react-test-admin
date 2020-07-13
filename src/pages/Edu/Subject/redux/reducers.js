@@ -1,6 +1,7 @@
 import {
   GET_SUBJECT_LIST,
   GET_SECSUBJECT_LIST,
+  UPDATE_SUBJECT
 } from "./constants";
 
 const initSubjectList = {
@@ -11,7 +12,7 @@ const initSubjectList = {
 export default function subjectList(prevState = initSubjectList, action) {
   switch (action.type) {
     case GET_SUBJECT_LIST:
-      console.log(action);
+      // console.log(action);
       //在这里给每条items加一个children属性，加号就能够展开
       action.data.items.forEach(items => items.children = [])
       return action.data;
@@ -28,6 +29,25 @@ export default function subjectList(prevState = initSubjectList, action) {
           }
         })
       }
+      return {
+        ...prevState
+      }
+    case UPDATE_SUBJECT:
+      prevState.items.forEach(subject => {
+        //传过来的id是不是一级课程分类
+        if (subject._id === action.data.id) {
+          // 修改title,然后return 掉
+          subject.title = action.data.title
+          return
+        }
+
+        // 还要遍历这个一级课程分类下面的二级课程分类
+        subject.children.forEach(secSubject => {
+          if (secSubject._id === action.data.id) {
+            secSubject.title = action.data.title
+          }
+        })
+      })
       //由于redux也是浅层比较，我们一直在原有的prevState上修改，地址没变，不会重新渲染，所以我们要重新解构，给他一个新的地址
       return {...prevState}
     default:

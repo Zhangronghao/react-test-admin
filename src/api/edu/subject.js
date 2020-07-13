@@ -42,3 +42,26 @@ export function reqAddSubjectList(title, parentId) {
     }
   })
 }
+//点击修改时候触发的函数
+export function reqUpdateSubject(title, id) {
+  return request({
+    url: `${BASE_URL}/update`,
+    // http://localhost:8888/admin/edu/subject/1/10
+    method: 'PUT',
+    //axios的post请求发送数据用data
+    data: {
+      title,
+      id
+    }
+  })
+}
+//点击删除时候触发的函数
+export function reqDelSubject(id) {
+  return request({
+    url: `${BASE_URL}/remove/${id}`,
+    // http://localhost:8888/admin/edu/subject/1/10
+    method: 'DELETE',
+    //axios的post请求发送数据用data
+
+  })
+}
