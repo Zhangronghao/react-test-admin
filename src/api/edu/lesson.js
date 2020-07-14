@@ -17,3 +17,22 @@ export function reqGetLessonList(chapterId) {
 
     })
 }
+
+export function reqGetQiniuToken() {
+    return request({
+        url: '/uploadtoken',
+        method: 'GET'
+    })
+}
+
+export function reqAddLesson({data}) {
+    return request({
+        url: `${BASE_URL}/save`,
+        method: 'POST',
+        data: {
+            ...data
+        }
+    })
+}
+
+

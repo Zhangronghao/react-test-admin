@@ -94,10 +94,14 @@ class Chapter extends Component {
     });
   };
   handleClickExpand = (expand, record) => {
-    console.log(expand,record);
+    console.log(expand, record);
     if (expand) {
       this.props.getLessonList(record._id)
     }
+  }
+  //因为我们传进来了一个data，所以这里要用到函数柯里化
+  handleGoAddLesson = data => () => {
+    this.props.history.push('/edu/chapter/addlesson',data)
   }
   render() {
     const {previewVisible, previewImage, selectedRowKeys} = this.state;
@@ -118,30 +122,32 @@ class Chapter extends Component {
         title: "操作",
         width: 300,
         fixed: "right",
+        //render能够拿到这一行的数据，所以我们在子组件的时候能够获取当前的_id
         render: (data) => {
-          if ("free" in data) {
-            return (
-              <div>
-                <Tooltip title="查看详情">
-                  <Button>
-                    <SettingOutlined />
-                  </Button>
-                </Tooltip>
-                <Tooltip title="更新章节">
-                  <Button type="primary" style={{margin: "0 10px"}}>
-                    <FormOutlined />
-                  </Button>
-                </Tooltip>
-                <Tooltip title="删除章节">
-                  <Button type="danger">
-                    <DeleteOutlined />
-                  </Button>
-                </Tooltip>
-              </div>
-            );
-          }
-        },
+          // if ("free" in data) {
+          return (
+            <div>
+              <Tooltip title="新增课时">
+                {/* //我们在新增课时的时候要把数据传进来，因为我们在进去的时候要用到外面这一行数据的id，用来发送请求，才知道我们的lesson要添加到哪里 */}
+                <Button type="primary" onClick={this.handleGoAddLesson(data)}>
+                  <PlusOutlined />
+                </Button>
+              </Tooltip>
+              <Tooltip title="更新章节">
+                <Button type="primary" style={{margin: "0 10px"}}>
+                  <FormOutlined />
+                </Button>
+              </Tooltip>
+              <Tooltip title="删除章节">
+                <Button type="danger">
+                  <DeleteOutlined />
+                </Button>
+              </Tooltip>
+            </div>
+          );
+        }
       },
+      // },
     ];
 
     // const data = [
