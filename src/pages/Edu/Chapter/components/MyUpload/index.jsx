@@ -110,6 +110,8 @@ export default class MyUpload extends Component {
                     //这是Upload的两个API
                     beforeUpload={this.handleBeforeUpload}
                     customRequest={this.handleCustomRequest}
+                    // 前端控制上传视频的类型, 不是视频文件,就看不到
+                    accept='video/*'
                 >
                     <Button>
                         <UploadOutlined /> 上传视频
