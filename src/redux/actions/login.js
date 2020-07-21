@@ -1,10 +1,11 @@
-import { reqLogin, reqLogout } from "@api/acl/login";
-import { LOGIN_SUCCESS, REMOVE_TOKEN } from "../constants/login";
+import {reqLogin, reqLogout} from "@api/acl/login";
+import {LOGIN_SUCCESS, REMOVE_TOKEN} from "../constants/login";
+import {reqMobileLogin} from '@api/acl/oauth'
 
 /**
  * 登陆
  */
-const loginSuccessSync = user => ({
+export const loginSuccessSync = user => ({
   type: LOGIN_SUCCESS,
   data: user
 });
@@ -12,6 +13,16 @@ const loginSuccessSync = user => ({
 export const login = (username, password) => {
   return dispatch => {
     return reqLogin(username, password).then(response => {
+      dispatch(loginSuccessSync(response));
+      // 返回token，外面才能接受
+      return response.token;
+    });
+  };
+};
+//这个是手机登陆的按钮
+export const mobileLogin = (phone, verify) => {
+  return dispatch => {
+    return reqMobileLogin(phone, verify).then(response => {
       dispatch(loginSuccessSync(response));
       // 返回token，外面才能接受
       return response.token;
