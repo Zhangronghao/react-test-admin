@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { constantRoutes } from "@conf/routes";
@@ -18,7 +18,8 @@ class PublicLayout extends Component {
   };
 
   render() {
-    return <Switch>{this.renderRoute(constantRoutes)}</Switch>;
+    // 我们使用懒加载的时候，需要使用suspense标签包裹
+    return <Suspense fallback = {<div>...Loading</div>}><Switch>{this.renderRoute(constantRoutes)}</Switch></Suspense>;
   }
 }
 

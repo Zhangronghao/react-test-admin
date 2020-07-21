@@ -1,6 +1,12 @@
-import Login from "@pages/Login";
-import NotFound from "@pages/404";
-import Oauth from "@pages/Login/LoginForm/components/Oauth";
+//这个是原来的引入方式，就算不使用的时候里面的代码也会自动运行，资源消耗大，所以我们要用懒加载
+// import Login from "@pages/Login";
+// import NotFound from "@pages/404";
+// import Oauth from "@pages/Login/LoginForm/components/Oauth";
+import {lazy} from "react";
+//lazy是一个方法，里面传的是一个函数，番薯要返回一个promise对象，刚好import返回的就是一个promise对象
+const Login = lazy(() => import("@pages/Login"))
+const NotFound = lazy(() => import("@pages/404"))
+const Oauth = lazy(() => import("@pages/Login/LoginForm/components/Oauth"))
 
 //#region 
 /* export const asyncRoutes = [
@@ -216,6 +222,7 @@ export const defaultRoutes = [
 		component: "Admin",
 		icon: "home",
 		name: "后台管理系统",
+		hidden:false
 	},
 	// { path: "*", redirect: "/404", component: NotFound, hidden: true }
 ];
